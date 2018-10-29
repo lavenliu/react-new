@@ -1,4 +1,13 @@
-# react-demo
+# React Demo
+
+一个 `React` 的 `Demo` 项目，纯粹是一个玩具。
+
+玩的过程中，使用的环境如下：
+
+1. macOS 10.13.6
+2. Node.js 8.12.0
+3. npm 6.4.1
+4. yarn 1.10.1
 
 # ES6 基础
 
@@ -6,7 +15,9 @@
 
 ```js
 let a = [2, 3, 4, 6, 7, 8, 9];
+
 [2, 3, 5, 4, 5, 2, 2].forEach(x => console.log(x));
+
 for (let i of a) {
     console.log(i);
 }
@@ -50,11 +61,11 @@ let jsx = (
 		{/* 变量的使用 */}
 		<p>My name is: {name}</p>
 		{/* 条件判断 */}
-	{ flag ? <p>My name is: {name}</p> : <p>I am TaoQi</p> }
-	{/* 数组循环 */}
-	{
-		myArray.map((name, index) => <p key={index}>Hello, I am {name}</p>)
-	}
+	    { flag ? <p>My name is: {name}</p> : <p>I am TaoQi</p> }
+	    {/* 数组循环 */}
+	    {
+		    myArray.map((name, index) => <p key={index}>Hello, I am {name}</p>)
+	    }
 	</div>
 );
 
@@ -64,13 +75,45 @@ ReactDOM.render(
 );
 ```
 
+# 项目工程搭建
+
+## 基础插件安装
+
+1. 安装 `react-router` 、`axios`
+2. 安装 `antd`
+3. 暴露 `webpack` 配置文件
+4. 安装 `less-loader`
+5. 修改 `less-loader`
+
+`React` 相关的插件安装：
+
+```sh
+yarn add react-router-dom axios less-loader
+```
+
+安装 `AntD`:
+
+```sh
+yarn add antd
+```
+
+`Less` 文件加载配置
+
+`AntD` 基本使用，一个样例：
+
+```js
+
+```
+
 # yarn & webpack
 
 ## yarn基本使用
 
-1. 定位：包管理工具，替代npm
+1. 定位：包管理工具，替代 npm
 2. 安装速度快，版本锁定，缓存机制
-3. yarn的安装：npm -g install yarn
+3. yarn 的安装：`npm -g install yarn`
+
+`yarn` 与 `npm` 的对比：
 
 | yarn | npm |
 |----|----|
@@ -91,7 +134,7 @@ yarn add babel-preset-env@1.6.1 babel-loader@7.1.2 --dev
 
 ### 配置React
 
-webpack处理react，安装插件：
+webpack 处理 react，安装插件：
 ```sh
 yarn add babel-preset-react@6.24.1 --dev
 yarn add react@16.2.0 react-dom@16.2.0 --dev
@@ -223,6 +266,4 @@ module.exports = {
 ## 组件的组合方式
 
 ## 组件间的数据通信
-
-
 
