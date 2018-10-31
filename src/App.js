@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 
-import Life from './pages/demo/Life'
+import LifeCycle from './pages/demo/LifeCycle';
 
-import './index.less';
 
 class App extends Component {
   render() {
     return (
       <div className="content">
-        <Life />
+        <LifeCycle />
       </div>
     );
   }

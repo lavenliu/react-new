@@ -1,43 +1,46 @@
-import React from 'react'
+import React, {Component} from 'react';
 
-export default class Child extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			count: 0
-		}
-	}
 
-	componentWillMount() {
-		console.log('component will mount')
-	}
+export default class Child extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            count: 0
+        }
+    }
 
-	componentDidMount() {
-		console.log('component did mount')
-	}
+    componentWillMount() {
+        console.log('component will mount')
+    }
 
-	componentWillReceiveProps(newProps) {
-		console.log('components will receive props' + newProps.name)
-	}
+    componentDidMount() {
+        console.log('component did mount')
+    }
 
-	shouldComponentUpdate() {
-		console.log('should component update')
-		return true
-	}
+    componentWillReceiveProps(newProps) {
+        console.log('component will receive props ' + newProps.name)
+    }
 
-	componentWillUpdate() {
-		console.log('will update')
-	}
+    shouldComponentUpdate() {
+        // this function should return ture or false, default is true
+        console.log('should component update')
+        return true
+    }
 
-	componentDidUpdate() {
-		console.log('did update')
-	}
+    componentWillUpdate() {
+        console.log('component will update')
+    }
 
-	render() {
-		return (
-			<div>
-			<p>{this.props.name}</p>
-				</div>
-		)
-	}
+    componentDidUpdate() {
+        console.log('component did update')
+    }
+
+    render() {
+        return (
+            <div>
+                <p>这里是子组件，测试子组件生命周期</p>
+                <p>父组件传递过来的属性：{this.props.name}</p>
+            </div>
+        )
+    }
 }
