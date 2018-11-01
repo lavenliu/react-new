@@ -19,6 +19,10 @@ npm config set registry https://registry.npm.taobao.org
 npm config get registry
 ```
 
+# HTML 基础
+
+# CSS 基础
+
 # ES6 基础
 
 ## 遍历数组
@@ -32,6 +36,19 @@ for (let i of a) {
     console.log(i);
 }
 ```
+
+## Promise
+
+通过封装 `Promise` 公共代码，然后可以在组件中使用其 `then` 方法了。
+
+
+## JsonP 插件使用
+
+## VS Code 基本使用
+
+使用 `VS Code` 调试 `js` 代码，并在浏览器的开发者模式下的 `source` 标签下查看调试信息。
+
+在需要调试的代码的地方添加 `debugger` 即可调试。
 
 # React 基础
 
@@ -342,7 +359,235 @@ export default class Admin extends React.Component {
 
 至此，基本的框架已搭建完成。现在就该往组件里面添加页面了。接下来进行左侧边栏的内容的设计。
 
+### 侧边栏的设计
 
+左侧边栏的设计通过读取一个 `menuConfig` 文件来实现。菜单文件内容见：`src/config/menuConfig.js` 文件。
+
+接着在模块 `NavLeft` 中导入该文件。接下来就是菜单的渲染工作了。可以到 `AntD` 官网上搜索“Menu 导航菜单”的帮助信息，上面有示例代码及导航菜单的风格，选择一种喜欢的风格即可。我们就选用比较简单的实现，即：“垂直菜单”。
+
+```js
+import React from 'react'
+import { Menu, Icon } from 'antd';
+
+// import MenuConfig from './../../config/menuConfig'
+import './index.less'
+const SubMenu = Menu.SubMenu;
+
+
+export default class NavLeft extends React.Component {
+
+    render() {
+        // const style = {
+        //     backgroundColor: 'red'
+        // }
+        return (
+            <div>
+                {/* 这里是导航部分，或者是Logo部分；点击的时候会跳转到首页 */}
+                <div className="logo">
+                    <img src="/assets/logo-ant.svg" alt="欢迎"/>
+                    <h1>曌扬 OPS</h1>
+                </div>
+
+                {/* 下面是菜单渲染 */}
+                <Menu theme="dark">
+                    <SubMenu key="sub1" title={<span><Icon type="mail" /><span>Navigation One</span></span>}>
+                        <Menu.Item key="1">Option 1</Menu.Item>
+                        <Menu.Item key="2">Option 2</Menu.Item>
+                        <Menu.Item key="3">Option 3</Menu.Item>
+                        <Menu.Item key="4">Option 4</Menu.Item>
+                    </SubMenu>
+                </Menu>
+            </div>
+        )
+    }
+}
+```
+
+左侧导航又分为两部分，上部分是导航部分（或者Logo部分），下面是要渲染的部分。
+
+基本的代码如下：
+
+```js
+import React from 'react'
+import { Menu, Icon } from 'antd'
+
+import MenuConfig from './../../config/menuConfig'
+import './index.less'
+const SubMenu = Menu.SubMenu
+
+
+export default class NavLeft extends React.Component {
+
+    // 在 componentWillMount 期间加载 menuConfig
+    componentWillMount() {
+        // console.log('component will mount')
+        const menuTreeNode = this.renderMenu(MenuConfig)
+        this.setState({
+            menuTreeNode
+        })
+    }
+
+    // 菜单渲染
+    renderMenu = (data) => {
+        return data.map((item) => {
+             if (item.children) {
+                 return (
+                     <SubMenu title={item.title} key={ item.key }>
+                         { this.renderMenu(item.children) }
+                     </SubMenu>
+                 )
+             }
+             return <Menu.Item title={item.title} key={item.key}>{ item.title }</Menu.Item>
+        })
+    }
+
+    render() {
+        // const style = {
+        //     backgroundColor: 'red'
+        // }
+        return (
+            <div>
+                {/* 这里是导航部分，或者是Logo部分；点击的时候会跳转到首页 */}
+                <div className="logo">
+                    <img src="/assets/logo-ant.svg" alt="欢迎"/>
+                    <h1>My OPS</h1>
+                </div>
+
+                {/* 下面是菜单渲染 */}
+                <Menu theme="dark">
+                    {/* <SubMenu key="sub1" title={<span><Icon type="mail" /><span>Navigation One</span></span>}>
+                        <Menu.Item key="1">Option 1</Menu.Item>
+                        <Menu.Item key="2">Option 2</Menu.Item>
+                        <Menu.Item key="3">Option 3</Menu.Item>
+                        <Menu.Item key="4">Option 4</Menu.Item>
+                    </SubMenu> */}
+                    { this.state.menuTreeNode }
+                </Menu>
+            </div>
+        )
+    }
+}
+```
+
+### 头部设计
+
+头部设计分为两部分。
+
+获取天气信息，通过 `Jsonp` 插件来获取。该插件支持跨域请求，而 `Axios` 不支持。接下来安装 `Jsonp` 插件：
+
+```sh
+yarn add jsonp --save
+```
+
+基本的代码为：
+
+```js
+import React from 'react'
+import { Row, Col } from 'antd'
+
+import Util from '../../utils/utils'
+import axios from '../../axios'
+
+import './index.less'
+
+export default class Header extends React.Component {
+
+    componentWillMount() {
+        this.setState({
+            userName: 'LavenLiu'
+        })
+
+        setInterval(() => {
+            let sysTime = Util.formatDate(new Date().getTime())
+            this.setState({
+                sysTime
+            })
+        }, 1000)
+
+        this.getWeahterAPIData()
+    }
+
+    getWeahterAPIData() {
+        const city = '上海'  // 中文需要编码
+        const apiURL = 'http://api.map.baidu.com/telematics/v3/weather?location='
+        const outputFormat = '&output=json'
+        const accessKey = '&ak=3p49MVra6urFRGOT9s8UBWr2'
+        axios.jsonp({
+            url: apiURL + encodeURIComponent(city) + outputFormat + accessKey
+        }).then((res) => {
+            // console.log(res)
+            if (res.status === 'success') {
+                const data = res.results[0].weather_data[0]
+                this.setState({
+                    dayPicture: data.dayPictureUrl,
+                    weather: data.weather
+                })
+            }
+        })
+    }
+
+    render() {
+        return (
+            // <div>This is Header</div>
+            // 头部分为两个部分，用两个 Row 来实现
+            // 1. 用户名信息
+            // 2. 时间、天气信息
+            <div className="header">
+                {/* 用户信息 */}
+                <Row className="header-top">
+                    <Col span="24">
+                        <span>欢迎，{this.state.userName}</span>
+                        <a href="http://baidu.com">退出</a>
+                    </Col>
+                </Row>
+
+                {/* 面包屑及天气信息 */}
+                <Row className="breadcrumb">
+                    {/* 当前的导航信息，通过 Redux 传递 */}
+                    <Col span="4" className="breadcrumb-title">
+                        首页
+                    </Col>
+                    {/* 时间及天气 */}
+                    <Col span="20" className="weather">
+                        <span className="date">{ this.state.sysTime }</span>
+                        <span className="weather-img">
+                            <img src={ this.state.dayPicture } alt="天气图片"/>
+                        </span>
+                        <span className="weather-detail">{ this.state.weather }</span>
+                    </Col>
+                </Row>
+            </div>
+        )
+    }
+}
+```
+
+### 底部组件的开发
+
+如何开发？
+
+1. 底部组价的布局
+2. `Home` 页面的实现
+3. 使用 `CSS` 实现箭头图标
+
+底部组件的代码为：
+
+```js
+import React from 'react'
+
+import './index.less'
+
+export default class Footer extends React.Component {
+
+    render() {
+        return (
+            <div className="footer">
+                Copyright © LavenLiu All Rights Reserved
+            </div>
+        )
+    }
+}
+```
 
 # yarn & webpack
 
