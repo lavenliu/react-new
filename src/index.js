@@ -16,7 +16,8 @@ import Router from './router'
 import * as serviceWorker from './serviceWorker';
 
 // ReactDOM.render(<Admin />, document.getElementById('root'));
-// ReactDOM.render(<Home />, document.getElementById('root'));   // route demo 1
+// route demo 1
+// ReactDOM.render(<Home />, document.getElementById('root'));
 ReactDOM.render(<Router />, document.getElementById('root'));
 
 serviceWorker.unregister();
