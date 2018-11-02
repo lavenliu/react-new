@@ -20,9 +20,10 @@ export default class Admin extends React.Component {
                 <Col span="21" className="main">
                     <Header />
                     <Row className="content">
-                        {/* Content */}
-                        <Home />
-                        {/* { this.props.children } */}
+                        {/* Content, Home is static */}
+                        {/* <Home /> */}
+                        {/* this is dynamic */}
+                        { this.props.children }
                     </Row>
                     <Footer />
                 </Col>

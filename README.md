@@ -589,155 +589,188 @@ export default class Footer extends React.Component {
 }
 ```
 
-# yarn & webpack
+## React 路由 4.0
 
-## yarn基本使用
+1. React Router 4.0 基本介绍
+2. React Router 4.0 Demo 介绍
+3. 项目路由实战
 
-1. 定位：包管理工具，替代 npm
-2. 安装速度快，版本锁定，缓存机制
-3. yarn 的安装：`npm -g install yarn`
+### 核心概念及用法介绍
 
-`yarn` 与 `npm` 的对比：
+- react-router
+- react-router-dom
+- react-router-dom 核心用法
+- 4.0 版本中，已不需要路由配置，一切皆组件。
+- react-router 提供了一些router的核心API，包括 `Router`、`Route`、`Switch` 等
+- react-router-dom 提供了 `BrowserRouter`、`HashRouter`、`Route`、`Link`、`NavLink`
 
-| yarn | npm |
-|----|----|
-| yarn init | npm init |
-| yarn | npm install |
-| yarn add xxx@x.x.x | npm install xxx@x.x.x --save |
-| yarn add xxx@x.x.x --dev | npm install xxx@x.x.x --save-dev |
-| yarn remove xxx | npm uninstall xxx --save(-dev) |
-| yarn run xxx | npm run xxx |
+### 路由模块安装
 
-
-## webpack使用
+使用 `npm` 或 `yarn` 进行安装：
 
 ```sh
-yarn add babel-core@6.26.0  --dev
-yarn add babel-preset-env@1.6.1 babel-loader@7.1.2 --dev
+npm install react-router-dom --save
+yarn add react-router-dom
 ```
 
-### 配置React
+### react-router-dom 核心用法
 
-webpack 处理 react，安装插件：
-```sh
-yarn add babel-preset-react@6.24.1 --dev
-yarn add react@16.2.0 react-dom@16.2.0 --dev
+- `HashRouter` 和 `BrowserRouter`
+- `Route`: `path`, `exact`, `component`, `render`
+- `NavLink`, `Link`
+- `Switch`
+- `Redirect`
+
+`HashRouter` 与 `BrowserRouter` 的区别：
+
+```html
+<!-- HashRouter -->
+http://localhost:3000/#/admin/buttons
+
+<!-- BrowserRouter -->
+http://localhost:3000/admin/buttons
 ```
 
-### 配置样式
+#### Route 用法
 
-```sh
-yarn add style-loader@0.19.1 css-loader@0.28.8 --dev
-yarn add extract-text-webpack-plugin@3.0.2 --dev
-yarn add sass-loader@6.0.6 --dev
-yarn add node-sass@4.7.2 --dev
-```
-
-### 配置图片
-
-```sh
-yarn add file-loader@1.1.6 url-loader@0.6.2 --dev
-```
-
-### 配置字体
-
-### webpack-dev-server
-
-```sh
-yarn add webpack-dev-server@2.9.7 --dev
-```
-
-
-## 最终的webpack配置
+代码片段：
 
 ```js
-const path = require('path');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin'); 
+<Route path='/admin/ui/buttons' component={ Buttons } />
+<Route path='/admin/ui/modals' component={ Modals } />
+<Route path='/admin/ui/loading' component={ Loading } />
+<Route path='/admin/ui/notification' component={ Notice } />
+<Route path='/admin/ui/messages' component={ Messages } />
+<Route path='/admin/ui/tabs' component={ Tabs } />
+<Route path='/admin/ui/gallery' component={ Gallery } />
+<Route path='/admin/ui/carousel' component={ Carousel } />
 
-module.exports = {
-	entry: './src/app.js',
-	output: {
-		path: path.resolve(__dirname, 'dist'),
-		publicPath: '/dist/',
-		filename: 'js/app.js'
-	},
-	module: {
-		rules: [
-			{
-				test: /\.js$/,
-				exclude: /(node_modules)/,
-				use: {
-					loader: 'babel-loader',
-					options: {
-						presets: ['env', 'react']
-					}
-				}
-			},
-			// css 文件的处理
-			{
-				test: /\.css$/,
-				use: ExtractTextPlugin.extract({
-					fallback: 'style-loader',
-					use: 'css-loader'
-				})
-			},
-			// sass 文件的处理
-			{
-				test: /\.scss$/,
-				use: ExtractTextPlugin.extract({
-					fallback: 'style-loader',
-					use: ['css-loader', 'sass-loader']
-				})
-			},
-			// 配置图片
-			{
-				test: /\.(png|jpg|gif)$/,
-				use: [
-					{
-						loader: 'url-loader',
-						options: {
-							limit: 8192,
-							name: 'resource/[name].[ext]'
-						}
-					}
-				]
-			},
-			// 加载字体图标
-			{
-				test: /\.(eot|svg|ttf|woff|woff2|otf)$/,
-				use: [
-					{
-						loader: 'url-loader',
-						options: {
-							limit: 8192,
-							name: 'resource/[name].[ext]'
-						}
-					}
-				]
-			}
-		]
-	},
-	plugins: [
-		// 处理HTML文件
-		new HtmlWebpackPlugin({
-			template: './src/index.html'
-		}),
-		// 独立 CSS 文件
-		new ExtractTextPlugin('css/[name].css'),
-		// 提取公共模块
-		new webpack.optimize.CommonsChunkPlugin({
-			name: 'common',
-			filename: 'js/base.js'
-		})
-	],
-	devServer: {
-		port: 8088
-	}
-};
+<Route path='/admin' render={() => {
+    <Admin>
+    <Route path='/admin/home' component={ Home } />
+}}>
 ```
 
+#### Link 用法
+
+代码示例
+
+```js
+import { Link } from 'react-router-dom'
+
+const Header = () => (
+    <header>
+        <nav>
+            <ul>
+                <li><Link to='/'>Home</Link></li>
+                <li><Link to='/about'>About</Link></li>
+                <li><Link to='/join'>Join us</Link></li>
+            </ul>
+        </nav>
+    </header>
+)
+
+<Link to={{ pathname: '/three/7' }}>Three #7</Link>
+```
+
+- 定义：`<Route path="/three/:number" />`
+- 取值：`this.props.match.params.number`
+
+```js
+<!-- 一个基本的 location 对象 -->
+{ pathname: '/', search: '', hash: '', key: 'abc123', state: {} }
+props.match.params.number
+```
+
+#### Switch 用法
+
+代码示例：
+
+```js
+<Switch>
+    <Route path='/admin/ui/buttons' component={ Buttons } />
+    <Route path='/admin/ui/modals' component={ Modals } />
+    <Route path='/admin/ui/loading' component={ Loading } />
+    <Route path='/admin/ui/notification' component={ Notice } />
+    <Route path='/admin/ui/messages' component={ Messages } />
+    <Route path='/admin/ui/tabs' component={ Tabs } />
+    <Route path='/admin/ui/gallery' component={ Gallery } />
+    <Route path='/admin/ui/carousel' component={ Carousel } />
+</Switch>
+```
+
+#### Redirect 用法
+
+代码示例：
+
+```js
+<!-- 路由重定向 -->
+<Redirect to='/admin/home' />
+```
+
+具体如何使用，请参考网站：`http://reacttraining.cn/web/example/basic`
+
+### React Router 4.0 演示
+
+1. Link 导航
+2. HashRouter
+3. Route
+
+一个代码片段：
+
+```js
+import React from 'react';
+import { HashRouter, Route, Link, Switch } from 'react-router-dom';
+
+import Main from './main'
+import About from './about'
+import Topics from './topics'
+
+
+export default class Home extends React.Component {
+    render() {
+        return (
+            <HashRouter>
+                {/* HashRouter 里面要有一个根节点，需要用一个div进行包裹 */}
+                <div>
+                    <ul>
+                        <li>
+                            <Link to='/'>Home</Link>
+                        </li>
+                        <li>
+                            <Link to='/about'>About</Link>
+                        </li>
+                        <li>
+                            <Link to='/topics'>Topics</Link>
+                        </li>
+                    </ul>
+                    <hr/>
+                    <Switch>
+                        <Route exact={true} path='/' component={Main}></Route>
+                        <Route path='/about' component={About}></Route>
+                        <Route path='/topics' component={Topics}></Route>
+                    </Switch>
+                </div>
+            </HashRouter>
+        )
+    }
+}
+```
+
+通过配置化来实现。
+
+如何获取路由参数？见：`src/pages/route_demo` 目录下的代码。
+
+## AntD 组件使用
+
+1. `Button` 组件介绍及使用
+2. `Modal` 组件介绍及使用
+3. `Loading` 组件介绍及使用
+4. `Notice` 组件介绍及使用
+5. `Message` 组件介绍及使用
+6. `Tab` 组件介绍及使用
+7. `Gallery` 组件介绍及使用
+8. `Carousel` 组件介绍及使用
 
 # React 组件
 
