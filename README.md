@@ -19,37 +19,6 @@ npm config set registry https://registry.npm.taobao.org
 npm config get registry
 ```
 
-# HTML 基础
-
-# CSS 基础
-
-# ES6 基础
-
-## 遍历数组
-
-```js
-let a = [2, 3, 4, 6, 7, 8, 9];
-
-[2, 3, 5, 4, 5, 2, 2].forEach(x => console.log(x));
-
-for (let i of a) {
-    console.log(i);
-}
-```
-
-## Promise
-
-通过封装 `Promise` 公共代码，然后可以在组件中使用其 `then` 方法了。
-
-
-## JsonP 插件使用
-
-## VS Code 基本使用
-
-使用 `VS Code` 调试 `js` 代码，并在浏览器的开发者模式下的 `source` 标签下查看调试信息。
-
-在需要调试的代码的地方添加 `debugger` 即可调试。
-
 # React 基础
 
 ## JSX
@@ -760,19 +729,6 @@ export default class Home extends React.Component {
 通过配置化来实现。
 
 如何获取路由参数？见：`src/pages/route_demo` 目录下的代码。
-
-## AntD 组件使用
-
-1. `Button` 组件介绍及使用
-2. `Modal` 组件介绍及使用
-3. `Loading` 组件介绍及使用
-4. `Notice` 组件介绍及使用
-5. `Message` 组件介绍及使用
-6. `Tab` 组件介绍及使用
-7. `Gallery` 组件介绍及使用
-8. `Carousel` 组件介绍及使用
-
-
 
 # React 组件
 
