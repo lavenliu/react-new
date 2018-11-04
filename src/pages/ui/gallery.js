@@ -27,7 +27,7 @@ export default class Gallery extends React.Component {
         const imgList = images.map((list) => list.map((item, key) =>
             <Card
                 style={{marginBottom:5}}
-                cover={<img src={'/gallery/'+item} />}
+                cover={<img src={'/gallery/'+item} alt='' />}
                 onClick={() => this.openGallery(item)}
                 key={key}>
                 <Card.Meta title='Admin site' description='beauty image' />
@@ -65,7 +65,7 @@ export default class Gallery extends React.Component {
                             visible: false
                         })
                     }}>
-                    <img src={this.state.currentImg} alt="" style={{width: '100%'}} />
+                    <img src={this.state.currentImg} alt="hello" style={{width: '100%'}} />
                 </Modal>
             </div>
         )
