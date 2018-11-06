@@ -241,7 +241,7 @@ class MyRegister extends React.Component {
                                         action='//jsonplaceholder.typicode.com/posts/'  // 后续替换成实际的接口地址
                                         onChange={this.handleChange}
                                     >
-                                        {this.state.userImg ? <img src={this.state.userImg} atl='' /> : <Icon type='plus' />}
+                                        {this.state.userImg ? <img src={this.state.userImg} alt='img' /> : <Icon type='plus' />}
                                     </Upload>
                                 )
                             }
@@ -249,7 +249,7 @@ class MyRegister extends React.Component {
                         <FormItem {...offsetLayout}>
                             {
                                 getFieldDecorator('protocol')(
-                                    <Checkbox>同意用户协议吗？<a href='#'>用户协议</a></Checkbox>
+                                    <Checkbox>同意用户协议吗？<a href='/admin/home'>用户协议</a></Checkbox>
                                 )
                             }
                         </FormItem>

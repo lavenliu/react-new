@@ -77,7 +77,7 @@ class MyForm extends React.Component {
                                     initialValue: true
                                 })(<Checkbox>记住我呗</Checkbox>)
                             }
-                            <a style={{float: 'right'}} href="">Forgot password</a>
+                            <a style={{float: 'right'}} href="/admin/home">Forgot password</a>
                         </FormItem>
                         <FormItem>
                             <Button type='primary' onClick={this.handleSubmit}>登录</Button>
