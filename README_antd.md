@@ -437,3 +437,125 @@ export default class Gallery extends React.Component {
 ```js
 
 ```
+
+### Form 基本使用
+
+### Table 基本使用
+
+#### 基本表格
+
+代码片段：
+
+```js
+import React from 'react';
+import { Card, Table } from 'antd';
+
+
+export default class BasicTable extends React.Component {
+
+    state = {}
+
+    componentDidMount() {
+        const data = [
+            {
+                id: '0',
+                userName: 'LavenLiu',
+                sex: '1',
+                status: '1',
+                interests: '1',
+                birthday: '2000-01-01',
+                address: '上海市陆家嘴8号',
+                morning: '09:00'
+            },
+            {
+                id: '1',
+                userName: 'LavenLiu',
+                sex: '1',
+                status: '1',
+                interests: '1',
+                birthday: '2000-01-01',
+                address: '上海市陆家嘴8号',
+                morning: '09:00'
+            },
+            {
+                id: '2',
+                userName: 'LavenLiu',
+                sex: '1',
+                status: '1',
+                interests: '1',
+                birthday: '2000-01-01',
+                address: '上海市陆家嘴8号',
+                morning: '09:00'
+            },
+            {
+                id: '3',
+                userName: 'LavenLiu',
+                sex: '1',
+                status: '1',
+                interests: '1',
+                birthday: '2000-01-01',
+                address: '上海市陆家嘴8号',
+                morning: '09:00'
+            }
+        ]
+        this.setState({
+            dataSource: data
+        })
+    }
+
+    render() {
+        const columns = [
+            {
+                title: 'id',
+                dataIndex: 'id'
+            },
+            {
+                title: '用户名',
+                dataIndex: 'userName'
+            },
+            {
+                title: '性别',
+                dataIndex: 'sex'
+            },
+            {
+                title: '状态',
+                dataIndex: 'status'
+            },
+            {
+                title: '爱好',
+                dataIndex: 'interests'
+            },
+            {
+                title: '生日',
+                dataIndex: 'birthday'
+            },
+            {
+                title: '地址',
+                dataIndex: 'address'
+            },
+            {
+                title: '起床',
+                dataIndex: 'morning'
+            }
+        ]
+        return (
+            <div>
+                <Card title="基础表格" className='card-wrap'>
+                    <Table columns={columns}
+                    dataSource={this.state.dataSource} 
+                    bordered
+                    pagination={false}
+                    />
+                </Card>
+            </div>
+        )
+    }
+}
+```
+
+#### 动态表格
+
+1. Mock 数据
+2. Axios 封装
+3. Loading 处理，错误拦截
+
