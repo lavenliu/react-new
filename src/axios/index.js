@@ -27,13 +27,16 @@ export default class Axios {
             loading = document.getElementById('ajaxLoading')
             loading.style.display = 'block'
         }
+        // my api
         const baseURL = 'https://easy-mock.com/mock/5bdfe2b18e124b2f5881b3e8/myapi'
+        // other api url
+        // const baseURL = 'https://www.easy-mock.com/mock/5a7278e28d0c633b9c4adbd7/api'
         return new Promise((resolve, reject) => {
             axios({
                 url: options.url,
                 method: 'get',
                 baseURL: baseURL,
-                timeout: 8000,
+                timeout: 18000,
                 params: (options.data && options.data.params) || ''
             }).then((response) => {
                 if (options.data && options.data.isShowLoading !== false) {
