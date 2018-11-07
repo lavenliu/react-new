@@ -1,7 +1,8 @@
 import React from 'react';
-import { Card, Table } from 'antd';
+import { Card, Button, Table, Modal, message } from 'antd';
 // import axios from 'axios'
 import axios from '../../axios'
+import Utils from '../../utils/utils'
 
 
 export default class MyTable extends React.Component {
@@ -10,11 +11,15 @@ export default class MyTable extends React.Component {
         // dataSource2: []
     }
 
+    params = {
+        page: 1
+    }
+
     componentDidMount() {
         const data = [
             {
                 id: '0',
-                key: '0',
+                // key: '0',
                 userName: 'LavenLiu',
                 sex: '1',
                 status: '1',
@@ -25,7 +30,7 @@ export default class MyTable extends React.Component {
             },
             {
                 id: '1',
-                key: '1',
+                // key: '1',
                 userName: 'LavenLiu',
                 sex: '0',
                 status: '2',
@@ -36,7 +41,7 @@ export default class MyTable extends React.Component {
             },
             {
                 id: '2',
-                key: '2',
+                // key: '2',
                 userName: 'LavenLiu',
                 sex: '1',
                 status: '3',
@@ -47,7 +52,7 @@ export default class MyTable extends React.Component {
             },
             {
                 id: '3',
-                key: '3',
+                // key: '3',
                 userName: 'LavenLiu',
                 sex: '0',
                 status: '4',
@@ -57,6 +62,7 @@ export default class MyTable extends React.Component {
                 morning: '09:00'
             }
         ]
+        data.map((item, index) => item.key = index)
         this.setState({
             dataSource1: data
         })
@@ -81,19 +87,57 @@ export default class MyTable extends React.Component {
         // })
 
         // 下面这一坨代码是封装过的 axios 请求
+        let _this = this  // this 作用域的问题
         axios.ajax({
             url: '/table/list',
             data: {
                 params: {
-                    page: 1
+                    page: this.params.page
                 },
                 // isShowLoading: false
             }
         }).then((res) => {
             if (res.code === 0) {
                 this.setState({
-                    dataSource2: res.data
+                    dataSource2: res.data,
+                    dataSource3: res.data,
+                    selectedRowKeys: [],
+                    selectedRows: null,
+                    pagination: Utils.pagination(res, (current) => {
+                        // to-do
+                        _this.params.page = current
+                        this.request()
+                    })
                 })
+            }
+        })
+    }
+
+    onRowClick = (record, index) => {
+        const selectKey = [index]
+        Modal.info({
+            title: '条目信息',
+            content: `用户名id: ${record.id}; 用户名: ${record.userName}; 兵器: ${record.status}`
+        })
+        this.setState({
+            selectedRowKeys: selectKey,
+            selectedItem: record
+        })
+    }
+
+    // 删除多选
+    handleDelete = () => {
+        let rows = this.state.selectedRows
+        let ids = []
+        rows.map((item) => {
+            ids.push(item.id)
+            return null
+        })
+        Modal.confirm({
+            title: '删除提示',
+            content: `确定要删除这些数据吗？${ids.join(',')}`,
+            onOk: () => {
+                message.success('删除成功')
             }
         })
     }
@@ -167,6 +211,28 @@ export default class MyTable extends React.Component {
                 key: 'morning'
             }
         ]
+
+        const {selectedRowKeys} = this.state
+        const rowSelection = {
+            type: 'radio',
+            selectedRowKeys
+        }
+        const rowCheckSelection = {
+            type: 'checkbox',
+            selectedRowKeys,
+            onChange: (selectedRowKeys, selectedRows) => {
+                // let ids = []
+                // selectedRows.map((item) => {
+                //     ids.push(item.id)
+                // })
+                this.setState({
+                    selectedRowKeys,
+                    // selectedIds: ids
+                    selectedRows
+                })
+            }
+        }
+
         return (
             <div>
                 <Card title="基础表格" className='card-wrap'>
@@ -181,6 +247,39 @@ export default class MyTable extends React.Component {
                     dataSource={this.state.dataSource2} 
                     bordered
                     pagination={false}
+                    />
+                </Card>
+                <Card title="表格-单选" className='card-wrap'>
+                    <Table columns={columns}
+                    rowSelection={rowSelection}
+                    onRow={(record, index) => {
+                        return {
+                            onClick: () => {
+                                this.onRowClick(record, index)
+                            }
+                        }
+                    }}
+                    dataSource={this.state.dataSource2} 
+                    bordered
+                    pagination={false}
+                    />
+                </Card>
+                <Card title="表格-复选" className='card-wrap'>
+                    <div>
+                        <Button style={{marginBottom: '10px'}} onClick={this.handleDelete}>删除</Button>
+                    </div>
+                    <Table columns={columns}
+                    rowSelection={rowCheckSelection}
+                    dataSource={this.state.dataSource3} 
+                    bordered
+                    pagination={false}
+                    />
+                </Card>
+                <Card title="表格-分页" className='card-wrap'>
+                    <Table columns={columns}
+                    dataSource={this.state.dataSource3} 
+                    bordered
+                    pagination={this.state.pagination}
                     />
                 </Card>
             </div>
