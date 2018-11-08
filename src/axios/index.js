@@ -2,8 +2,37 @@ import JsonP from 'jsonp'
 import axios from 'axios'
 import { Modal } from 'antd';
 
+import Utils from '../utils/utils'
+
 
 export default class Axios {
+    static requestList(_this, url, params) {
+        let data = {
+            params: params
+        }
+        this.ajax({
+            url: url,
+            data: data
+            // 如果key值与value值相同，可以简写如下
+            // url,
+            // data
+        }).then((res) => {
+            if (res) {
+                let list = res.data.item_list.map((item, index) => {
+                    item.key = index
+                    return item
+                })
+                _this.setState({
+                    list: list,
+                    pagination: Utils.pagination(res, (current) => {
+                        _this.params.page = current
+                        _this.requestList()
+                    })
+                })
+            }
+        })
+    }
+
     static jsonp(options) {
         // wrapper Promise and then we can use its `then` method in chain-style
         return new Promise((resolve, reject) => {

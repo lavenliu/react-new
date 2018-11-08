@@ -25,7 +25,7 @@ npm config get registry
 
 例子1：
 
-```
+```js
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -96,7 +96,7 @@ yarn add antd
 
 `Less` 文件加载配置
 
-```json
+```js
 编辑webpack.config.dev.js文件，增加如下内容即可：
 
 const lessRegex = /\.(lcss|less)$/;
@@ -222,7 +222,7 @@ yarn add babel-plugin-import --dev
 
 然后修改 `webpack.config.dev.js` 文件，大概在235行：
 
-```json
+```js
 ,
 ["import", {
 	"libraryName": "antd",
