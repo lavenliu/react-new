@@ -56,12 +56,12 @@ export default {
         number += '';
         return number.replace(/(\d{3})\d*(\d{4})/g, '$1***********$2')
     },
-    getOptionList(data){
+    getOptionList(data) {
         if(!data){
             return [];
         }
         let options = [] //[<Option value="0" key="all_key">全部</Option>];
-        data.map((item)=>{
+        data.map((item) => {
             options.push(<Option value={item.id} key={item.id}>{item.name}</Option>)
         })
         return options;
