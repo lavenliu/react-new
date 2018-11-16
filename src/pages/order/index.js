@@ -1,13 +1,12 @@
 import React from 'react'
-import { Card, Button, Table, Form, Select, 
-    DatePicker, Modal, message } from 'antd'
+import { Card, Button, Table } from 'antd'
 
 import BaseForm from '../../components/BaseForm'
 import axios from '../../axios'
-import Utils from '../../utils/utils'
+// import Utils from '../../utils/utils'
 
-const FormItem = Form.Item;
-const Option = Select.Option;
+// const FormItem = Form.Item;
+// const Option = Select.Option;
 
 
 export default class Order extends React.Component {
@@ -65,53 +64,82 @@ export default class Order extends React.Component {
         axios.requestList(this, '/order/list', this.params)
     }
 
+    handleConfirm = () => {
+        // const item = this.state.selectedItem
+        console.log('handle confirm')
+    }
+
     render() {
         const columns = [
             {
                 title: '订单编号',
-                dataIndex: 'order_sn'
+                dataIndex: 'order_sn',
+                key: 'order_sn'
             },
             {
                 title: '车辆编号',
-                dataIndex: 'car_sn'
+                dataIndex: 'car_sn',
+                key: 'car_sn'
             },
             {
                 title: '用户名',
-                dataIndex: 'user_name'
+                dataIndex: 'user_name',
+                key: 'user_name'
             },
             {
                 title: '手机号',
-                dataIndex: 'mobile'
+                dataIndex: 'mobile',
+                key: 'mobile'
             },
             {
                 title: '里程',
-                dataIndex: 'distance'
+                dataIndex: 'distance',
+                key: 'distance',
+                render(distance) {
+                    return distance/1000 + 'Km'
+                }
             },
             {
                 title: '行驶时长',
-                dataIndex: 'total_time'
+                dataIndex: 'total_time',
+                key: 'total_time'
             },
             {
                 title: '状态',
-                dataIndex: 'status'
+                dataIndex: 'status',
+                key: 'status'
             },
             {
                 title: '开始时间',
-                dataIndex: 'start_time'
+                dataIndex: 'start_time',
+                key: 'start_time'
             },
             {
                 title: '结束时间',
-                dataIndex: 'end_time'
+                dataIndex: 'end_time',
+                key: 'end_time'
             },
             {
                 title: '订单金额',
-                dataIndex: 'total_fee'
+                dataIndex: 'total_fee',
+                key: 'total_fee'
             },
             {
                 title: '实付金额',
-                dataIndex: 'user_pay'
+                dataIndex: 'user_pay',
+                key: 'user_pay'
             }
         ]
+        
+        const selectedRowKeys = this.state.selectedRowKeys
+        const rowSelection = {
+            type: 'radio',
+            selectedRowKeys,
+            onChange: (selectedRowKeys, selectedRows) => {
+                console.log(`selectedRowKeys: ${selectedRowKeys};`, 'selectedRows: ', selectedRows)
+            }
+        }
+
         return (
             <div>
                 <Card>
@@ -119,8 +147,8 @@ export default class Order extends React.Component {
                     <BaseForm formList={this.formList} filterSubmit={this.handleFilter} />
                 </Card>
                 <Card>
-                    <Button>订单详情</Button>
-                    <Button>结束订单</Button>
+                    <Button type='primary' onClick={this.jumpOrderDetail}>订单详情</Button>
+                    <Button type='primary' style={{marginLeft: 10}} onClick={this.handleConfirm}>结束订单</Button>
                 </Card>
                 <div>
                     <Table 
@@ -128,6 +156,7 @@ export default class Order extends React.Component {
                         columns={columns}
                         dataSource={this.state.list}
                         pagination={this.state.pagination}
+                        rowSelection={rowSelection}
                     />
                 </div>
             </div>
