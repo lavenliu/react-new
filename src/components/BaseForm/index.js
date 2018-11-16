@@ -1,10 +1,9 @@
 import React from 'react'
-import { Input, Select, Form, Button, Checkbox, DatePicker, Radio } from 'antd'
+import { Input, Select, Form, Button, Checkbox, DatePicker } from 'antd'
 
 import Utils from '../../utils/utils'
 
 const FormItem = Form.Item
-const Option = Select.Option
 
 
 class FilterForm extends React.Component {
@@ -83,6 +82,15 @@ class FilterForm extends React.Component {
                         }
                     </FormItem>
                     formItemList.push(CHECKBOX)
+                } else if (item.type === 'DATEPICKER') {
+                    const DATEPICKER = <FormItem label={label} key={field}>
+                        {
+                            getFieldDecorator([field])(
+                                <DatePicker showTime={true} placeholder={placeholder} format='YYYY-MM-DD HH:mm:ss' />
+                            )
+                        }
+                    </FormItem>
+                    formItemList.push(DATEPICKER)
                 }
             })
         }

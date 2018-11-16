@@ -1,14 +1,14 @@
 import React from 'react';
 import { Card, Button, Table, Modal, message } from 'antd';
-// import axios from 'axios'
+
 import axios from '../../axios'
 import Utils from '../../utils/utils'
 
 
-export default class MyTable extends React.Component {
+export default class CheckTable extends React.Component {
 
     state = {
-        // dataSource2: []
+        selectedRowKeys: []
     }
 
     params = {
@@ -63,28 +63,11 @@ export default class MyTable extends React.Component {
             }
         ]
         data.map((item, index) => item.key = index)
-        this.setState({
-            dataSource1: data
-        })
         this.request()
-        // console.log(this.state.dataSource2)
     }
 
     // 动态获取 Mock 数据
     request = () => {
-        // 下面这坨代码是直接使用 axios 插件去请求接口的
-        // const baseURL = 'https://easy-mock.com/mock/5bdfe2b18e124b2f5881b3e8/myapi'
-        // axios.get(baseURL+'/table/list').then((res) => {
-        //     if (res.status === 200 && res.data.code === 0) {
-        //         // debugger
-        //         console.log('111', res)
-        //         this.setState({
-        //             dataSource2: res.data.data
-        //         })
-        //     }
-        //     console.log(JSON.stringify(res))
-        //     console.log(JSON.stringify(res.data.data))
-        // })
 
         // 下面这一坨代码是封装过的 axios 请求
         let _this = this  // this 作用域的问题
@@ -99,8 +82,7 @@ export default class MyTable extends React.Component {
         }).then((res) => {
             if (res.code === 0) {
                 this.setState({
-                    dataSource2: res.data,
-                    dataSource3: res.data,
+                    dataSource4: res.data,
                     selectedRowKeys: [],
                     selectedRows: null,
                     pagination: Utils.pagination(res, (current) => {
@@ -110,18 +92,6 @@ export default class MyTable extends React.Component {
                     })
                 })
             }
-        })
-    }
-
-    onRowClick = (record, index) => {
-        const selectKey = [index]
-        Modal.info({
-            title: '条目信息',
-            content: `用户名id: ${record.id}; 用户名: ${record.userName}; 兵器: ${record.status}`
-        })
-        this.setState({
-            selectedRowKeys: selectKey,
-            selectedItem: record
         })
     }
 
@@ -213,10 +183,6 @@ export default class MyTable extends React.Component {
         ]
 
         const {selectedRowKeys} = this.state
-        const rowSelection = {
-            type: 'radio',
-            selectedRowKeys
-        }
         const rowCheckSelection = {
             type: 'checkbox',
             selectedRowKeys,
@@ -233,53 +199,26 @@ export default class MyTable extends React.Component {
             }
         }
 
+        const hasSelected = selectedRowKeys.length > 0
         return (
             <div>
-                <Card title="基础表格" className='card-wrap'>
-                    <Table columns={columns}
-                    dataSource={this.state.dataSource1} 
-                    bordered
-                    pagination={false}
-                    />
-                </Card>
-                <Card title="动态渲染表格" className='card-wrap'>
-                    <Table columns={columns}
-                    dataSource={this.state.dataSource2} 
-                    bordered
-                    pagination={false}
-                    />
-                </Card>
-                <Card title="表格-单选" className='card-wrap'>
-                    <Table columns={columns}
-                    rowSelection={rowSelection}
-                    onRow={(record, index) => {
-                        return {
-                            onClick: () => {
-                                this.onRowClick(record, index)
-                            }
-                        }
-                    }}
-                    dataSource={this.state.dataSource2} 
-                    bordered
-                    pagination={false}
-                    />
-                </Card>
                 <Card title="表格-复选" className='card-wrap'>
                     <div>
-                        <Button style={{marginBottom: '10px'}} onClick={this.handleDelete}>删除</Button>
+                        <Button 
+                            style={{marginBottom: '10px'}} 
+                            onClick={this.handleDelete}
+                            disabled={!hasSelected}>
+                            删除
+                        </Button>
+                        <span style={{marginLeft: 8}}>
+                            { hasSelected ? `已选 ${selectedRowKeys.length} 项` : '' }
+                        </span>
                     </div>
                     <Table columns={columns}
                     rowSelection={rowCheckSelection}
-                    dataSource={this.state.dataSource3} 
+                    dataSource={this.state.dataSource4} 
                     bordered
                     pagination={false}
-                    />
-                </Card>
-                <Card title="表格-分页" className='card-wrap'>
-                    <Table columns={columns}
-                    dataSource={this.state.dataSource3} 
-                    bordered
-                    pagination={this.state.pagination}
                     />
                 </Card>
             </div>

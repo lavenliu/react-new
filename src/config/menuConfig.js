@@ -64,6 +64,14 @@ const menuList = [
                 key: '/admin/table/basic',
             },
             {
+                title: '单选表格',
+                key: '/admin/table/radio',
+            },
+            {
+                title: '复选表格',
+                key: '/admin/table/checkbox',
+            },
+            {
                 title: '高级表格',
                 key: '/admin/table/high',
             }
