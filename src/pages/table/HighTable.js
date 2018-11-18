@@ -51,7 +51,7 @@ export default class HighTable extends React.Component {
         // 下面这一坨代码是封装过的 axios 请求
         let _this = this  // this 作用域的问题
         axios.ajax({
-            url: '/table/list1',
+            url: '/tableList1',
             data: {
                 params: {
                     page: this.params.page

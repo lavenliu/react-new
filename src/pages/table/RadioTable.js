@@ -74,10 +74,10 @@ export default class RadioTable extends React.Component {
         // 下面这一坨代码是封装过的 axios 请求
         let _this = this  // this 作用域的问题
         axios.ajax({
-            url: '/table/list',
+            url: '/tableList',
             data: {
                 params: {
-                    page: this.params.page
+                    _page: this.params.page
                 },
                 // isShowLoading: false
             }
@@ -89,7 +89,7 @@ export default class RadioTable extends React.Component {
                     selectedRows: null,
                     pagination: Utils.pagination(res, (current) => {
                         // to-do
-                        _this.params.page = current
+                        _this.params._page = current
                         this.request()
                     })
                 })
@@ -187,6 +187,13 @@ export default class RadioTable extends React.Component {
 
         return (
             <div>
+                <Card title="表格-单选" className='card-wrap'>
+                    <Table columns={columns}
+                    dataSource={this.state.dataSource1} 
+                    bordered
+                    pagination={false}
+                    />
+                </Card>
                 <Card title="表格-单选" className='card-wrap'>
                     <Table columns={columns}
                     rowSelection={rowRadioSelection}

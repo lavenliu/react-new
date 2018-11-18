@@ -57,7 +57,8 @@ export default class Axios {
             loading.style.display = 'block'
         }
         // my api
-        const baseURL = 'https://easy-mock.com/mock/5bdfe2b18e124b2f5881b3e8/myapi'
+        // const baseURL = 'https://easy-mock.com/mock/5bdfe2b18e124b2f5881b3e8/myapi'
+        const baseURL = 'http://localhost:5000'
         // other api url
         // const baseURL = 'https://www.easy-mock.com/mock/5a7278e28d0c633b9c4adbd7/api'
         return new Promise((resolve, reject) => {

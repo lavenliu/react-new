@@ -44,6 +44,7 @@ export default class Header extends React.Component {
     }
 
     render() {
+        const menuType = this.props.menuType
         return (
             // <div>This is Header</div>
             // Header component has two part, we use two `Row` to realize it
@@ -52,27 +53,37 @@ export default class Header extends React.Component {
             <div className="header">
                 {/* user info */}
                 <Row className="header-top">
-                    <Col span="24">
+                    {
+                        menuType ? 
+                        <Col span='6' className='logo'>
+                            <img src="/assets/logo-ant.svg" alt="logo"/>
+                            <span>LianZhong 运维管理系统</span>
+                        </Col> : ''
+                    }
+                    <Col span={ menuType ? 18 : 24 }>
                         <span>欢迎，{this.state.userName}</span>
                         <a href="http://baidu.com">退出</a>
                     </Col>
                 </Row>
 
                 {/* breadcurmb and weather */}
-                <Row className="breadcrumb">
-                    {/* current navi info, use Redux to pass value */}
-                    <Col span="4" className="breadcrumb-title">
-                        首页
-                    </Col>
-                    {/* datetime and weather */}
-                    <Col span="20" className="weather">
-                        <span className="date">{ this.state.sysTime }</span>
-                        <span className="weather-img">
-                            <img src={ this.state.dayPicture } alt="weather info"/>
-                        </span>
-                        <span className="weather-detail">{ this.state.weather }</span>
-                    </Col>
-                </Row>
+                {
+                    menuType ? '' :
+                    <Row className="breadcrumb">
+                        {/* current navi info, use Redux to pass value */}
+                        <Col span="4" className="breadcrumb-title">
+                            首页
+                        </Col>
+                        {/* datetime and weather */}
+                        <Col span="20" className="weather">
+                            <span className="date">{ this.state.sysTime }</span>
+                            <span className="weather-img">
+                                <img src={ this.state.dayPicture } alt="weather info"/>
+                            </span>
+                            <span className="weather-detail">{ this.state.weather }</span>
+                        </Col>
+                    </Row>
+                }
             </div>
         )
     }
