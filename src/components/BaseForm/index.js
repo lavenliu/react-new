@@ -9,7 +9,7 @@ const FormItem = Form.Item
 class FilterForm extends React.Component {
 
     handleFilterSubmit = () => {
-        let fieldsValue = this.props.form.getFieldsValue()
+        const fieldsValue = this.props.form.getFieldsValue()
         this.props.filterSubmit(fieldsValue)
     }
 
@@ -30,7 +30,7 @@ class FilterForm extends React.Component {
                 let width = item.width
                 
                 if (item.type === '时间查询') {
-                    const begin_time = <FormItem label='订单时间' key={field}>
+                    const begin_time = <FormItem label='订单时间' key={i}>
                     {
                         getFieldDecorator('begin_time')(
                             <DatePicker showTime={true} placeholder={placeholder} format='YYYY-MM-DD HH:mm:ss' />

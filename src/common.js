@@ -12,13 +12,10 @@ export default class Common extends React.Component {
     render() {
         return (
             <div>
-                <Row className="container">
-                    <Header />
+                <Row className="common-page">
+                    <Header menuType='second' />
                 </Row>
                 <Row className="content">
-                    {/* Content, Home is static */}
-                    {/* <Home /> */}
-                    {/* this is dynamic */}
                     { this.props.children }
                 </Row>
                 <Row>

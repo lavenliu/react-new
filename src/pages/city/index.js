@@ -26,7 +26,7 @@ export default class City extends React.Component{
             url: '/openCity',
             data:{
                 params:{
-                    page: this.params.page
+                    _page: this.params.page
                 }
             }
         }).then((res)=>{
@@ -37,7 +37,7 @@ export default class City extends React.Component{
             this.setState({
                 list: list,
                 pagination: Utils.pagination(res, (current)=>{
-                    _this.params.page = current;
+                    _this.params._page = current;
                     _this.requestList();
                 })
             })
@@ -55,7 +55,7 @@ export default class City extends React.Component{
         let cityInfo = this.cityForm.props.form.getFieldsValue();
         console.log(cityInfo);
         axios.ajax({
-            url: '/city/open',
+            url: '/cityOpen',
             data: {
                 params: cityInfo
             }

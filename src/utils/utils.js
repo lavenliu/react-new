@@ -16,14 +16,14 @@ export default {
             onChange: (current) => {
                 callback(current)
             },
-            current: data.page,
-            pageSize: data.page_size,
-            total: data.total,
+            current: data.data.page,
+            pageSize: data.data.page_size,
+            total: data.data.total,
             showTotal: () => {
-                return `共 ${data.total} 条`
-            },
-            // showQuickJumper: true
+                return `共 ${data.data.total} 条`
+            }
         }
+        // console.log(page)
         return page
     },
     // 格式化金额,单位:分(eg:430分=4.30元)

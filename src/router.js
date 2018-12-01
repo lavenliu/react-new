@@ -21,6 +21,8 @@ import HighTable from './pages/table/HighTable'
 import City from './pages/city'
 import Order from './pages/order'
 import User from './pages/user'
+import Bar from './pages/echarts/bar'
+import RichText from './pages/rich'
 import Common from './common'
 import NotFound from './pages/not_found/index'
 
@@ -53,6 +55,8 @@ export default class IRouter extends React.Component {
                                     <Route path='/admin/city' component={City}></Route>
                                     <Route path='/admin/order' component={Order}></Route>
                                     <Route path='/admin/user' component={User}></Route>
+                                    <Route path='/admin/charts/bar' component={Bar}></Route>
+                                    <Route path='/admin/rich' component={RichText}></Route>
                                     <Route component={NotFound}></Route>
                                 </Switch>
                             </Admin>
@@ -63,7 +67,6 @@ export default class IRouter extends React.Component {
                             </Common>
                         }>
                         </Route>
-                        <Route path='/order/detail' component={Login}></Route>
                     </App>
                 </div>
             </Router>

@@ -72,10 +72,10 @@ export default class CheckTable extends React.Component {
         // 下面这一坨代码是封装过的 axios 请求
         let _this = this  // this 作用域的问题
         axios.ajax({
-            url: '/table/list',
+            url: '/tableList',
             data: {
                 params: {
-                    page: this.params.page
+                    _page: this.params.page
                 },
                 // isShowLoading: false
             }
