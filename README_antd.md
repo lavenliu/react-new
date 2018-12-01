@@ -442,6 +442,11 @@ export default class Gallery extends React.Component {
 
 ### Table 基本使用
 
+如果要进行单选或多选。选择后进行操作，完成后清空选择，通过 `rowSelection.selectedRowKeys` 来控制选中项。
+
+默认是 `checkbox`。
+
+
 #### 基本表格
 
 代码片段：

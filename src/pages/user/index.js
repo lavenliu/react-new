@@ -19,7 +19,7 @@ export default class User extends React.Component {
     }
 
     state = {
-        list: []
+        dataSource: []
     }
 
     // requestList = () => {
@@ -36,7 +36,7 @@ export default class User extends React.Component {
         }).then((res) => {
             let _this = this
             this.setState({
-                list: res.data.item_list.map((item, index) => {
+                dataSource: res.data.item_list.map((item, index) => {
                     item.key = index
                     return item
                 }),
@@ -295,7 +295,7 @@ export default class User extends React.Component {
                         columns={columns}
                         updateSelectedItem={Utils.updateSelectedItem.bind(this)}
                         selectedRowKeys={this.state.selectedRowKeys}
-                        dataSource={this.state.list}
+                        dataSource={this.state.dataSource}
                         pagination={this.state.pagination}
                     />
 

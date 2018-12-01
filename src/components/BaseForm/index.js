@@ -9,7 +9,7 @@ const FormItem = Form.Item
 class FilterForm extends React.Component {
 
     handleFilterSubmit = () => {
-        let fieldsValue = this.props.form.getFieldsValue()
+        const fieldsValue = this.props.form.getFieldsValue()
         this.props.filterSubmit(fieldsValue)
     }
 

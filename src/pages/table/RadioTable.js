@@ -98,14 +98,16 @@ export default class RadioTable extends React.Component {
     }
 
     onRowClick = (record, index) => {
+        // record 是当前行的记录
+        // index 是当前行在表格中的行
         const selectKey = [index]
-        Modal.info({
-            title: '条目信息',
-            content: `用户名id: ${record.id}; 用户名: ${record.userName}; 兵器: ${record.status}`
-        })
         this.setState({
             selectedRowKeys: selectKey,
             selectedItem: record
+        })
+        Modal.info({
+            title: '条目信息',
+            content: `用户名id: ${record.id}; 用户名: ${record.userName}; 兵器: ${record.status}`
         })
     }
 
@@ -187,7 +189,7 @@ export default class RadioTable extends React.Component {
 
         return (
             <div>
-                <Card title="表格-单选" className='card-wrap'>
+                <Card title="表格-基本" className='card-wrap'>
                     <Table columns={columns}
                     dataSource={this.state.dataSource1} 
                     bordered

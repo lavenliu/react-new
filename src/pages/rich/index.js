@@ -18,10 +18,11 @@ export default class RichText extends React.Component {
             <div>
                 <Card title='富文本编辑器'>
                     <Editor>
-                        
                     </Editor>
                 </Card>
-                <Card title='柱形图表二' style={{marginTop: 10}}>
+                <Card style={{marginTop: 10}}>
+                    <Button type='primary'>发布文章</Button>
+                    <Button type='primary'style={{marginLeft: 10}}>预览文章</Button>
                 </Card>
             </div>
         )
