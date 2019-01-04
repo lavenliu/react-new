@@ -129,6 +129,24 @@ const menuList = [
         title: '权限设置',
         key: '/admin/permission'
     },
+    {
+        title: '日志相关',
+        key: '/admin/log',
+        children: [
+            {
+                title: 'Demo01',
+                key: '/admin/log/demo01'
+            },
+            {
+                title: 'Demo02',
+                key: '/admin/log/demo02'
+            },
+            {
+                title: 'Demo03',
+                key: '/admin/log/demo03'
+            },
+        ]
+    },
 ];
 
 export default menuList;

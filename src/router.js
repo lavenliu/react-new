@@ -23,6 +23,7 @@ import Order from './pages/order'
 import User from './pages/user'
 import Bar from './pages/echarts/bar'
 import RichText from './pages/rich'
+import LogDemo01 from './pages/log/Demo01'
 import Common from './common'
 import NotFound from './pages/not_found/index'
 
@@ -57,6 +58,7 @@ export default class IRouter extends React.Component {
                                     <Route path='/admin/user' component={User}></Route>
                                     <Route path='/admin/charts/bar' component={Bar}></Route>
                                     <Route path='/admin/rich' component={RichText}></Route>
+                                    <Route path='/admin/log/demo01' component={LogDemo01}></Route>
                                     <Route component={NotFound}></Route>
                                 </Switch>
                             </Admin>

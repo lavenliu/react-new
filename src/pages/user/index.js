@@ -15,25 +15,23 @@ const RadioGroup = Radio.Group;
 export default class User extends React.Component {
 
     params = {
-        _page: 1
+        page: 1
     }
 
     state = {
         dataSource: []
     }
 
-    // requestList = () => {
-    //     axios.requestList(this, '/userList', this.params)
-    // }
     requestList = () => {
         axios.ajax({
-            url: '/userList',
+            url: '/users',
             data: {
                 params: {
-                    _page: this.params._page
+                    page: this.params.page
                 }
-            }
+        }
         }).then((res) => {
+            console.log(res)
             let _this = this
             this.setState({
                 dataSource: res.data.item_list.map((item, index) => {
@@ -41,7 +39,7 @@ export default class User extends React.Component {
                     return item
                 }),
                 pagination: Utils.pagination(res, (current) => {
-                    _this.params._page = current
+                    _this.params.page = current
                     _this.requestList()
                 })
             })
@@ -169,66 +167,10 @@ export default class User extends React.Component {
                 key: 'username'
             },
             {
-                title: '性别',
+                title: '邮箱',
                 width: 80,
-                dataIndex: 'sex',
-                key: 'sex',
-                render(sex) {
-                    return sex === 0 ? '女' : '男'
-                }
-            },
-            {
-                title: '状态',
-                width: 80,
-                dataIndex: 'status',
-                key: 'status',
-                render(status) {
-                    const weapons = {
-                        "1": '屠龙刀',
-                        "2": '倚天剑',
-                        "3": '孔雀翎',
-                        "4": '蝴蝶剑',
-                        "5": '流星锤'
-                    }
-                    return weapons[status]
-                }
-            },
-            {
-                title: '爱好',
-                width: 80,
-                dataIndex: 'interest',
-                key: 'interest',
-                render(interest) {
-                    const heros = {
-                        "1": '李寻欢',
-                        "2": '傅红雪',
-                        "3": '谢晓峰',
-                        "4": '周伯通',
-                        "5": '洪七公',
-                        "6": '黄老邪',
-                        "7": '王重阳',
-                        "8": '段智兴'
-                    }
-                    return heros[interest]
-                }
-            },
-            {
-                title: '生日',
-                width: 80,
-                dataIndex: 'birthday',
-                key: 'birthday'
-            },
-            {
-                title: '地址',
-                width: 120,
-                dataIndex: 'address',
-                key: 'address'
-            },
-            {
-                title: '起床',
-                width: 80,
-                dataIndex: 'time',
-                key: 'time'
+                dataIndex: 'email',
+                key: 'email'
             }
         ]
 
